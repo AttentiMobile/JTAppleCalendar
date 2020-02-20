@@ -264,11 +264,14 @@ extension JTAppleCalendarView {
         for date in dates {
             if calendar.startOfDay(for: date) >= startOfMonthCache! && calendar.startOfDay(for: date) <= endOfMonthCache! {
                 let periodApart = calendar.dateComponents([.month], from: startOfMonthCache, to: date)
-                let day = calendar.dateComponents([.day], from: date).day!
-                guard let monthSectionIndex = periodApart.month else { continue }
-                let currentMonthInfo = monthInfo[monthSectionIndex]
-                if let indexPath = currentMonthInfo.indexPath(forDay: day) {
-                    returnPaths.append(indexPath)
+                if let dayComponent = calendar.dateComponents([.day], from: date).day,
+                    let startOfMonthCacheDayComponent = calendar.dateComponents([.day], from: startOfMonthCache).day{
+                    let day = (dayComponent - startOfMonthCacheDayComponent + 1)
+                    guard let monthSectionIndex = periodApart.month else { continue }
+                    let currentMonthInfo = monthInfo[monthSectionIndex]
+                    if let indexPath = currentMonthInfo.indexPath(forDay: day) {
+                        returnPaths.append(indexPath)
+                    }
                 }
             }
         }

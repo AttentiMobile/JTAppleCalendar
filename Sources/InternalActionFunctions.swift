@@ -137,9 +137,16 @@ extension JTAppleCalendarView {
             // Set the new cache
             _cachedConfiguration = validConfig
             
-            if let
-                startMonth = calendar.startOfMonth(for: validConfig.startDate),
-                let endMonth = calendar.endOfMonth(for: validConfig.endDate) {
+            let startMonthByType : Date?, endMonthByType : Date?
+            if validConfig.generateOutDates == .tillExactEndDay{
+                startMonthByType = validConfig.startDate
+                endMonthByType = validConfig.endDate
+            } else {
+                startMonthByType = calendar.startOfMonth(for: validConfig.startDate)
+                endMonthByType = calendar.endOfMonth(for: validConfig.endDate)
+            }
+            if let startMonth = startMonthByType,
+                let endMonth = endMonthByType {
                 startOfMonthCache = startMonth
                 endOfMonthCache   = endMonth
                 // Create the parameters for the date format generator

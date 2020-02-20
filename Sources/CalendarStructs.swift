@@ -298,6 +298,8 @@ struct JTAppleDateConfigGenerator {
                         numberOfPostDatesForThisMonth =
                             maxNumberOfDaysInWeek * numberOfRowsToGenerateForCurrentMonth - (numberOfDaysInMonthFixed + numberOfPreDatesForThisMonth)
                         numberOfDaysInMonthVariable += numberOfPostDatesForThisMonth
+                    case .tillExactEndDay:
+                        numberOfDaysInMonthVariable =  Calendar.current.dateComponents([.day], from: parameters.startDate, to: parameters.endDate).day ?? 0
                     default:
                         break
                     }
