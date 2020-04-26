@@ -270,7 +270,14 @@ extension JTAppleCalendarView {
                     guard let monthSectionIndex = periodApart.month else { continue }
                     let currentMonthInfo = monthInfo[monthSectionIndex]
                     if let indexPath = currentMonthInfo.indexPath(forDay: day) {
-                        returnPaths.append(indexPath)
+                        if (indexPath.row >= 0) {
+                            returnPaths.append(indexPath)
+                        } else { //maybe month were replaced between start to end cache dates
+                            let section = indexPath.section+1
+                            let item = indexPath.row + currentMonthInfo.numberOfDaysInMonth - 1
+                            let newIndexPath = IndexPath(item: item, section: section)
+                            returnPaths.append(newIndexPath)
+                        }
                     }
                 }
             }
