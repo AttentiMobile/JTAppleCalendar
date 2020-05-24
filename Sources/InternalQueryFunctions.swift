@@ -282,7 +282,6 @@ extension JTAppleCalendarView {
                 }
             }
         }
-        print("returnPaths: \(returnPaths)")
         return returnPaths
     }
     
