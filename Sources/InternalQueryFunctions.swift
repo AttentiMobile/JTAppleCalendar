@@ -273,8 +273,8 @@ extension JTAppleCalendarView {
                         if (indexPath.row >= 0) {
                             returnPaths.append(indexPath)
                         } else { //maybe month were replaced between start to end cache dates
-                            let section = indexPath.section+1
-                            let item = indexPath.row + currentMonthInfo.numberOfDaysInMonth - 1
+                            let section = (currentMonthInfo.numberOfDaysInMonth - startOfMonthCacheDayComponent + dayComponent) / 7
+                            let item = (currentMonthInfo.numberOfDaysInMonth - startOfMonthCacheDayComponent + dayComponent) % 7
                             let newIndexPath = IndexPath(item: item, section: section)
                             returnPaths.append(newIndexPath)
                         }
@@ -282,6 +282,7 @@ extension JTAppleCalendarView {
                 }
             }
         }
+        print("returnPaths: \(returnPaths)")
         return returnPaths
     }
     
